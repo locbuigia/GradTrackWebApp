@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://locbui:locbui@contactkeeper-ngwd5.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "secret"
+}
