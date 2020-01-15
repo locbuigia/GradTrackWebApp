@@ -14,6 +14,9 @@ const StudentSchema = mongoose.Schema({
     required: true,
     unique: true
   },
+  major: {
+    type: String
+  },
   phone: {
     type: String
   },

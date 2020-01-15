@@ -29,6 +29,7 @@ router.post('/', auth, async (req, res) => {
     name,
     email,
     studentID,
+    major,
     phone,
     company,
     position,
@@ -39,7 +40,7 @@ router.post('/', auth, async (req, res) => {
   } = req.body;
 
   try {
-    let student = await Student.findOne({ studentID });
+    let student = await Student.findOne({ $or: [{ studentID }, { email }] });
     if (student) {
       res.status(400).json({ msg: 'Student already exists in our database' });
     } else {
@@ -47,6 +48,7 @@ router.post('/', auth, async (req, res) => {
         name,
         email,
         studentID,
+        major,
         phone,
         company,
         position,
@@ -73,6 +75,7 @@ router.put('/:id', auth, async (req, res) => {
   const {
     name,
     email,
+    major,
     phone,
     company,
     position,
@@ -86,6 +89,7 @@ router.put('/:id', auth, async (req, res) => {
 
   if (name) studentFields.name = name;
   if (email) studentFields.email = email;
+  if (major) studentFields.major = major;
   if (phone) studentFields.phone = phone;
   if (company) studentFields.company = company;
   if (position) studentFields.position = position;

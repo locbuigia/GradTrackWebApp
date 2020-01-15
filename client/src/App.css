@@ -200,9 +200,3 @@ h2,
 h3 {
   text-align: center;
 }
-
-.grid-1-5 {
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-  grid-gap: 2rem;
-}
