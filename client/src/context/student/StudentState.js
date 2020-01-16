@@ -75,6 +75,7 @@ const StudentState = props => {
         config
       );
       dispatch({ type: UPDATE_STUDENT, payload: res.data });
+      window.location.href = '/';
     } catch (err) {
       dispatch({ type: STUDENT_ERROR, payload: err.response.data.msg });
     }

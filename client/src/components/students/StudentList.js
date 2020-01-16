@@ -100,7 +100,10 @@ const StudentList = props => {
               <ModalFooter>
                 <button
                   className='btn btn-danger'
-                  onClick={() => onDelete(currStudent._id)}
+                  onClick={() => {
+                    onDelete(currStudent._id);
+                    deleteConfirmToggle();
+                  }}
                 >
                   Delete
                 </button>

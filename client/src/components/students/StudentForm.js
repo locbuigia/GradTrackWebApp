@@ -80,7 +80,6 @@ const StudentForm = () => {
     } else {
       updateStudent(student);
       clearCurrent();
-      window.location.href = '/';
     }
   };
 
