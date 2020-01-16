@@ -37,7 +37,8 @@ const StudentSchema = mongoose.Schema({
     required: true
   },
   salary: {
-    type: Number
+    type: Number,
+    default: 0
   },
   employmentType: {
     type: String,

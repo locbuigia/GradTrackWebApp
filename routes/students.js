@@ -1,6 +1,5 @@
 const express = require('express');
 const auth = require('../middleware/auth');
-const { check, validationResult } = require('express-validator/check');
 
 const router = express.Router();
 
@@ -64,7 +63,7 @@ router.post('/', auth, async (req, res) => {
     }
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({ msg: 'Student already exists in our database' });
   }
 });
 
@@ -74,6 +73,7 @@ router.post('/', auth, async (req, res) => {
 router.put('/:id', auth, async (req, res) => {
   const {
     name,
+    studentID,
     email,
     major,
     phone,
@@ -88,6 +88,7 @@ router.put('/:id', auth, async (req, res) => {
   const studentFields = {};
 
   if (name) studentFields.name = name;
+  if (studentID) studentFields.studentID = studentID;
   if (email) studentFields.email = email;
   if (major) studentFields.major = major;
   if (phone) studentFields.phone = phone;
