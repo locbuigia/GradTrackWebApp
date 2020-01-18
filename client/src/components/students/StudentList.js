@@ -19,74 +19,35 @@ const StudentList = props => {
     // eslint-disable-next-line
   }, []);
 
-  const [detailModal, setDetailModal] = useState(false);
-  const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [currStudent, setCurrStudent] = useState(null);
 
-  const detailModalToggle = student => {
-    setDetailModal(!detailModal);
+  const toggle = student => {
+    setModal(!modal);
     student && setCurrStudent(student);
   };
 
-  const deleteConfirmModalToggle = () => {
-    setConfirmDeleteModal(!confirmDeleteModal);
+  const deleteConfirmToggle = () => {
+    setDeleteModal(!deleteModal);
   };
 
   const onDelete = id => {
     deleteStudent(id);
-    detailModalToggle();
+    toggle();
   };
 
   const onEdit = student => {
     setCurrent(student);
-    detailModalToggle();
+    toggle();
     props.history.push('/form');
-  };
-
-  const renderConfirmDeleteModal = () => {
-    return (
-      <Modal
-        isOpen={confirmDeleteModal}
-        toggle={deleteConfirmModalToggle}
-        className='ui-modal-box'
-      >
-        <ModalHeader toggle={deleteConfirmModalToggle}>
-          Confirm Delete
-        </ModalHeader>
-        <ModalBody>
-          <p>Do you want to remove this student?</p>
-        </ModalBody>
-        <ModalFooter>
-          <button
-            className='btn btn-danger'
-            onClick={() => {
-              onDelete(currStudent._id);
-              deleteConfirmModalToggle();
-            }}
-          >
-            Delete
-          </button>
-          <button
-            style={{ background: 'lightgrey' }}
-            className='btn'
-            onClick={deleteConfirmModalToggle}
-          >
-            Cancel
-          </button>
-        </ModalFooter>
-      </Modal>
-    );
   };
 
   const renderModal = () => {
     return (
       currStudent && (
-        <Modal
-          isOpen={detailModal}
-          toggle={detailModalToggle}
-          className='ui-modal-box'
-        >
-          <ModalHeader toggle={detailModalToggle}>Student Detail</ModalHeader>
+        <Modal isOpen={modal} toggle={toggle} className='ui-modal-box'>
+          <ModalHeader toggle={toggle}>Student Detail</ModalHeader>
           <ModalBody>
             <b>Student ID:</b> {currStudent.studentID}
             <br />
@@ -106,7 +67,7 @@ const StudentList = props => {
             <br />
             <b>Skills Used:</b> {currStudent.skillUsed}
             <br />
-            <b>Salary:</b>
+            <b>Salary:</b>{' '}
             {currStudent.salary ? `$${currStudent.salary}` : 'Not Provided'}
             <br />
             <b>Employment Type:</b> {currStudent.employmentType}
@@ -118,18 +79,47 @@ const StudentList = props => {
               onClick={() => onEdit(currStudent)}
             >
               Edit
-            </button>
+            </button>{' '}
             <button
               className='btn btn-danger'
-              onClick={() => deleteConfirmModalToggle()}
+              onClick={() => deleteConfirmToggle()}
             >
               Delete
             </button>
-            {renderConfirmDeleteModal()}
+            <Modal
+              isOpen={deleteModal}
+              toggle={deleteConfirmToggle}
+              className='ui-modal-box'
+            >
+              <ModalHeader toggle={deleteConfirmToggle}>
+                Confirm Delete
+              </ModalHeader>
+              <ModalBody>
+                <p>Do you want to remove this student?</p>
+              </ModalBody>
+              <ModalFooter>
+                <button
+                  className='btn btn-danger'
+                  onClick={() => {
+                    onDelete(currStudent._id);
+                    deleteConfirmToggle();
+                  }}
+                >
+                  Delete
+                </button>
+                <button
+                  style={{ background: 'lightgrey' }}
+                  className='btn'
+                  onClick={deleteConfirmToggle}
+                >
+                  Cancel
+                </button>
+              </ModalFooter>
+            </Modal>{' '}
             <button
               style={{ background: 'lightgrey' }}
               className='btn'
-              onClick={detailModalToggle}
+              onClick={toggle}
             >
               Cancel
             </button>
@@ -160,7 +150,7 @@ const StudentList = props => {
           <tr key={index}>
             <td>{index}</td>
             <td>
-              <a href='/#' onClick={() => detailModalToggle(student)}>
+              <a href='/#' onClick={() => toggle(student)}>
                 {student.studentID}
                 {renderModal()}
               </a>
