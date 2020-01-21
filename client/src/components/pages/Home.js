@@ -17,7 +17,7 @@ const Home = props => {
 
   return (
     <Fragment>
-      <div className='grid-ui'>
+      <div>
         <div>
           <StudentFilter />
         </div>
