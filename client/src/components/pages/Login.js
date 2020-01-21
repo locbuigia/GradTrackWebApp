@@ -1,15 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
-import AlertContext from '../../context/alert/alertContext';
 import { login, clearErrors } from '../../actions/authActions';
+import { setAlert } from '../../actions/alertActions';
 
 const Login = props => {
-  const alertContext = useContext(AlertContext);
-
-  const { setAlert } = alertContext;
   const {
     login,
     clearErrors,
+    setAlert,
     auth: { error, isAuthenticated }
   } = props;
 
@@ -86,4 +84,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { login, clearErrors })(Login);
+export default connect(mapStateToProps, { login, clearErrors, setAlert })(
+  Login
+);

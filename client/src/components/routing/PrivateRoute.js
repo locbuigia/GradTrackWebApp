@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import AuthContext from '../../context/auth/authContext';
+import { connect } from 'react-redux';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const authContext = useContext(AuthContext);
-  const { isAuthenticated } = authContext;
+const PrivateRoute = props => {
+  const {
+    auth: { isAuthenticated },
+    component: Component,
+    ...rest
+  } = props;
 
   return (
     <Route
@@ -20,4 +23,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, {})(PrivateRoute);

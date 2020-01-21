@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { connect } from 'react-redux';
+
+import { loadUser } from '../../actions/authActions';
+import { setAlert } from '../../actions/alertActions';
 
 import StudentContext from '../../context/student/studentContext';
-import AlertContext from '../../context/alert/alertContext';
-import AuthContext from '../../context/auth/authContext';
 
-const StudentForm = () => {
+const StudentForm = props => {
   const studentContext = useContext(StudentContext);
-  const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
 
   const {
     error,
@@ -18,10 +18,10 @@ const StudentForm = () => {
     clearCurrent,
     clearStudentError
   } = studentContext;
-  const { setAlert } = alertContext;
+  const { loadUser, setAlert } = props;
 
   useEffect(() => {
-    authContext.loadUser();
+    loadUser();
     // eslint-disable-next-line
   }, []);
 
@@ -249,4 +249,8 @@ const StudentForm = () => {
   );
 };
 
-export default StudentForm;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { setAlert, loadUser })(StudentForm);
