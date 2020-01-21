@@ -1,13 +1,17 @@
 import React, { useState, useContext, useEffect } from 'react';
-import AuthContext from '../../context/auth/authContext';
+import { connect } from 'react-redux';
 import AlertContext from '../../context/alert/alertContext';
+import { login, clearErrors } from '../../actions/authActions';
 
 const Login = props => {
   const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
-  const { login, error, clearErrors, isAuthenticated } = authContext;
+  const {
+    login,
+    clearErrors,
+    auth: { error, isAuthenticated }
+  } = props;
 
   const [user, setUser] = useState({
     email: '',
@@ -15,6 +19,7 @@ const Login = props => {
   });
 
   useEffect(() => {
+    console.log('isAuthenticated', isAuthenticated);
     if (isAuthenticated) {
       props.history.push('/');
     }
@@ -77,4 +82,8 @@ const Login = props => {
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { login, clearErrors })(Login);

@@ -1,17 +1,17 @@
 import React, { Fragment, useEffect, useContext } from 'react';
+import { connect } from 'react-redux';
 import StudentList from '../students/StudentList';
 import StudentFilter from '../students/StudentFilter';
+import { loadUser } from '../../actions/authActions';
 
-import AuthContext from '../../context/auth/authContext';
 import StudentContext from '../../context/student/studentContext';
 
 const Home = props => {
-  const authContext = useContext(AuthContext);
   const studentContext = useContext(StudentContext);
 
   useEffect(() => {
     studentContext.setCurrent(null);
-    authContext.loadUser();
+    props.loadUser();
     // eslint-disable-next-line
   }, []);
 
@@ -35,4 +35,8 @@ const Home = props => {
   );
 };
 
-export default Home;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { loadUser })(Home);
