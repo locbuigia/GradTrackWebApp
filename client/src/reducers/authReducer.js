@@ -7,9 +7,17 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS
-} from '../types';
+} from '../actions/types';
 
-export default (state, action) => {
+const initialState = {
+  token: localStorage.getItem('token'),
+  isAuthenticated: null,
+  loading: true,
+  user: null,
+  error: null
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
       localStorage.setItem('token', action.payload.token);

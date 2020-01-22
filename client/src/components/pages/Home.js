@@ -1,23 +1,23 @@
-import React, { Fragment, useEffect, useContext } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { connect } from 'react-redux';
 import StudentList from '../students/StudentList';
 import StudentFilter from '../students/StudentFilter';
-
-import AuthContext from '../../context/auth/authContext';
-import StudentContext from '../../context/student/studentContext';
+import { loadUser } from '../../actions/authActions';
+import { setCurrent } from '../../actions/studentActions';
+import PropTypes from 'prop-types';
 
 const Home = props => {
-  const authContext = useContext(AuthContext);
-  const studentContext = useContext(StudentContext);
+  const { loadUser, setCurrent } = props;
 
   useEffect(() => {
-    studentContext.setCurrent(null);
-    authContext.loadUser();
+    loadUser();
+    setCurrent(null);
     // eslint-disable-next-line
   }, []);
 
   return (
     <Fragment>
-      <div className='grid-ui'>
+      <div>
         <div>
           <StudentFilter />
         </div>
@@ -35,4 +35,13 @@ const Home = props => {
   );
 };
 
-export default Home;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+Home.propTypes = {
+  loadUser: PropTypes.func,
+  setCurrent: PropTypes.func
+};
+
+export default connect(mapStateToProps, { loadUser, setCurrent })(Home);

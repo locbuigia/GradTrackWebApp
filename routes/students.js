@@ -3,7 +3,6 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-const User = require('../models/User');
 const Student = require('../models/Student');
 
 // @route   GET api/students

@@ -1,13 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react';
-import AuthContext from '../../context/auth/authContext';
-import AlertContext from '../../context/alert/alertContext';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { login, clearErrors } from '../../actions/authActions';
+import { setAlert } from '../../actions/alertActions';
+import PropTypes from 'prop-types';
 
 const Login = props => {
-  const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
-
-  const { setAlert } = alertContext;
-  const { login, error, clearErrors, isAuthenticated } = authContext;
+  const {
+    login,
+    clearErrors,
+    setAlert,
+    auth: { error, isAuthenticated }
+  } = props;
 
   const [user, setUser] = useState({
     email: '',
@@ -77,4 +80,17 @@ const Login = props => {
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+Login.propTypes = {
+  login: PropTypes.func,
+  clearErrors: PropTypes.func,
+  setAlert: PropTypes.func,
+  auth: PropTypes.object.isRequired
+};
+
+export default connect(mapStateToProps, { login, clearErrors, setAlert })(
+  Login
+);

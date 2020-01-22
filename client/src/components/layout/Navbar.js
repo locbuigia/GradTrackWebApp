@@ -1,16 +1,18 @@
-import React, { Fragment, useContext } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { logout } from '../../actions/authActions';
+import { clearStudents } from '../../actions/studentActions';
 
-import AuthContext from '../../context/auth/authContext';
-import StudentContext from '../../context/student/studentContext';
-
-const Navbar = ({ title, icon }) => {
-  const authContext = useContext(AuthContext);
-  const studentContext = useContext(StudentContext);
-
-  const { isAuthenticated, logout, user } = authContext;
-  const { clearStudents } = studentContext;
+const Navbar = props => {
+  const {
+    auth: { isAuthenticated, user },
+    title,
+    icon,
+    logout,
+    clearStudents
+  } = props;
 
   const onLogout = () => {
     logout();
@@ -54,7 +56,9 @@ const Navbar = ({ title, icon }) => {
 
 Navbar.propTypes = {
   title: PropTypes.string.isRequired,
-  icon: PropTypes.string
+  icon: PropTypes.string,
+  logout: PropTypes.func,
+  auth: PropTypes.object.isRequired
 };
 
 Navbar.defaultProps = {
@@ -62,4 +66,8 @@ Navbar.defaultProps = {
   icon: 'fas fa-id-card-alt'
 };
 
-export default Navbar;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { logout, clearStudents })(Navbar);

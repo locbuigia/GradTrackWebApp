@@ -1,27 +1,29 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { loadUser } from '../../actions/authActions';
+import { setAlert } from '../../actions/alertActions';
+import {
+  addStudent,
+  updateStudent,
+  clearCurrent,
+  clearStudentError
+} from '../../actions/studentActions';
 
-import StudentContext from '../../context/student/studentContext';
-import AlertContext from '../../context/alert/alertContext';
-import AuthContext from '../../context/auth/authContext';
-
-const StudentForm = () => {
-  const studentContext = useContext(StudentContext);
-  const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
-
+const StudentForm = props => {
   const {
-    error,
-    current,
+    student: { error, current },
     addStudent,
     updateStudent,
     clearCurrent,
-    clearStudentError
-  } = studentContext;
-  const { setAlert } = alertContext;
+    clearStudentError,
+    loadUser,
+    setAlert
+  } = props;
 
   useEffect(() => {
-    authContext.loadUser();
+    loadUser();
     // eslint-disable-next-line
   }, []);
 
@@ -36,7 +38,7 @@ const StudentForm = () => {
     }
 
     // eslint-disable-next-line
-  }, [studentContext, current]);
+  }, [props, current]);
 
   const [student, setStudent] = useState({
     name: '',
@@ -249,4 +251,26 @@ const StudentForm = () => {
   );
 };
 
-export default StudentForm;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  student: state.student
+});
+
+StudentForm.propTypes = {
+  setAlert: PropTypes.func,
+  loadUser: PropTypes.func,
+  addStudent: PropTypes.func,
+  updateStudent: PropTypes.func,
+  clearCurrent: PropTypes.func,
+  clearStudentError: PropTypes.func,
+  student: PropTypes.object.isRequired
+};
+
+export default connect(mapStateToProps, {
+  setAlert,
+  loadUser,
+  addStudent,
+  updateStudent,
+  clearCurrent,
+  clearStudentError
+})(StudentForm);
