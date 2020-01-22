@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { login, clearErrors } from '../../actions/authActions';
 import { setAlert } from '../../actions/alertActions';
+import PropTypes from 'prop-types';
 
 const Login = props => {
   const {
@@ -82,6 +83,13 @@ const Login = props => {
 const mapStateToProps = state => ({
   auth: state.auth
 });
+
+Login.propTypes = {
+  login: PropTypes.func,
+  clearErrors: PropTypes.func,
+  setAlert: PropTypes.func,
+  auth: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, { login, clearErrors, setAlert })(
   Login

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import PropTypes from 'prop-types';
 import {
   deleteStudent,
   setCurrent,
@@ -182,6 +182,13 @@ const mapStateToProps = state => ({
   student: state.student,
   auth: state.auth
 });
+
+StudentList.propTypes = {
+  deleteStudent: PropTypes.func,
+  setCurrent: PropTypes.func,
+  getStudents: PropTypes.func,
+  student: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, {
   deleteStudent,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types';
 import { loadUser } from '../../actions/authActions';
 import { setAlert } from '../../actions/alertActions';
 import {
@@ -255,6 +255,16 @@ const mapStateToProps = state => ({
   auth: state.auth,
   student: state.student
 });
+
+StudentForm.propTypes = {
+  setAlert: PropTypes.func,
+  loadUser: PropTypes.func,
+  addStudent: PropTypes.func,
+  updateStudent: PropTypes.func,
+  clearCurrent: PropTypes.func,
+  clearStudentError: PropTypes.func,
+  student: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, {
   setAlert,

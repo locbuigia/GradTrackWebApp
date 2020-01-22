@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { register, clearErrors } from '../../actions/authActions';
 import { setAlert } from '../../actions/alertActions';
+import PropTypes from 'prop-types';
 
 const Register = props => {
   const {
@@ -112,6 +113,13 @@ const Register = props => {
 const mapStateToProps = state => ({
   auth: state.auth
 });
+
+Register.propTypes = {
+  register: PropTypes.func,
+  clearErrors: PropTypes.func,
+  setAlert: PropTypes.func,
+  auth: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, { register, clearErrors, setAlert })(
   Register

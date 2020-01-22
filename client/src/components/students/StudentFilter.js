@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { filterStudents, clearFilter } from '../../actions/studentActions';
+import PropTypes from 'prop-types';
 
 const StudentFilter = props => {
   const {
@@ -38,6 +39,12 @@ const StudentFilter = props => {
 const mapStateToProps = state => ({
   student: state.student
 });
+
+StudentFilter.propTypes = {
+  filterStudents: PropTypes.func,
+  clearFilter: PropTypes.func,
+  student: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, { filterStudents, clearFilter })(
   StudentFilter
