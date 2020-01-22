@@ -222,7 +222,7 @@ const StudentForm = props => {
             type='number'
             name='salary'
             placeholder='Annual Salary'
-            value={salary}
+            value={salary || ''}
             onChange={onChange}
           />
         </Col>
