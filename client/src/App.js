@@ -14,9 +14,6 @@ import PrivateRoute from './components/routing/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import StudentState from './context/student/StudentState';
-import AuthState from './context/auth/AuthState';
-import AlertState from './context/alert/AlertState';
 import setAuthToken from './utils/setAuthToken';
 
 if (localStorage.token) {
@@ -25,29 +22,23 @@ if (localStorage.token) {
 
 const App = () => {
   return (
-    <AuthState>
-      <StudentState>
-        <AlertState>
-          <Provider store={store}>
-            <Router>
-              <Fragment>
-                <Navbar />
-                <div className='container'>
-                  <Alerts />
-                  <Switch>
-                    <PrivateRoute exact path='/' component={Home} />
-                    <PrivateRoute exact path='/about' component={About} />
-                    <PrivateRoute exact path='/form' component={StudentForm} />
-                    <Route exact path='/register' component={Register} />
-                    <Route exact path='/login' component={Login} />
-                  </Switch>
-                </div>
-              </Fragment>
-            </Router>
-          </Provider>
-        </AlertState>
-      </StudentState>
-    </AuthState>
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <Navbar />
+          <div className='container'>
+            <Alerts />
+            <Switch>
+              <PrivateRoute exact path='/' component={Home} />
+              <PrivateRoute exact path='/about' component={About} />
+              <PrivateRoute exact path='/form' component={StudentForm} />
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+            </Switch>
+          </div>
+        </Fragment>
+      </Router>
+    </Provider>
   );
 };
 

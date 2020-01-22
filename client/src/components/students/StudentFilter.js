@@ -1,9 +1,13 @@
-import React, { useContext, useRef, useEffect } from 'react';
-import StudentContext from '../../context/student/studentContext';
+import React, { useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { filterStudents, clearFilter } from '../../actions/studentActions';
 
-const StudentFilter = () => {
-  const studentContext = useContext(StudentContext);
-  const { filterStudents, clearFilter, filtered } = studentContext;
+const StudentFilter = props => {
+  const {
+    filterStudents,
+    clearFilter,
+    student: { filtered }
+  } = props;
   const text = useRef('');
 
   useEffect(() => {
@@ -31,4 +35,10 @@ const StudentFilter = () => {
   );
 };
 
-export default StudentFilter;
+const mapStateToProps = state => ({
+  student: state.student
+});
+
+export default connect(mapStateToProps, { filterStudents, clearFilter })(
+  StudentFilter
+);

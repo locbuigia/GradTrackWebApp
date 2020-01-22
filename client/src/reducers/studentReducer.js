@@ -5,14 +5,21 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_STUDENT,
-  STUDENT_ERROR,
   FILTER_STUDENTS,
-  CLEAR_STUDENTS,
   CLEAR_FILTER,
-  CLEAR_STUDENT_ERROR
-} from '../types';
+  STUDENT_ERROR,
+  CLEAR_STUDENT_ERROR,
+  CLEAR_STUDENTS
+} from '../actions/types';
 
-export default (state, action) => {
+const initialState = {
+  students: [],
+  current: null,
+  filtered: null,
+  error: null
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case STUDENT_ERROR:
       return {

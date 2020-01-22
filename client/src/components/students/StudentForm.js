@@ -1,24 +1,26 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import { loadUser } from '../../actions/authActions';
 import { setAlert } from '../../actions/alertActions';
-
-import StudentContext from '../../context/student/studentContext';
+import {
+  addStudent,
+  updateStudent,
+  clearCurrent,
+  clearStudentError
+} from '../../actions/studentActions';
 
 const StudentForm = props => {
-  const studentContext = useContext(StudentContext);
-
   const {
-    error,
-    current,
+    student: { error, current },
     addStudent,
     updateStudent,
     clearCurrent,
-    clearStudentError
-  } = studentContext;
-  const { loadUser, setAlert } = props;
+    clearStudentError,
+    loadUser,
+    setAlert
+  } = props;
 
   useEffect(() => {
     loadUser();
@@ -36,7 +38,7 @@ const StudentForm = props => {
     }
 
     // eslint-disable-next-line
-  }, [studentContext, current]);
+  }, [props, current]);
 
   const [student, setStudent] = useState({
     name: '',
@@ -250,7 +252,15 @@ const StudentForm = props => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  student: state.student
 });
 
-export default connect(mapStateToProps, { setAlert, loadUser })(StudentForm);
+export default connect(mapStateToProps, {
+  setAlert,
+  loadUser,
+  addStudent,
+  updateStudent,
+  clearCurrent,
+  clearStudentError
+})(StudentForm);

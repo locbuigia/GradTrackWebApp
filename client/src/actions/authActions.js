@@ -55,6 +55,9 @@ export const login = formData => async dispatch => {
     const res = await axios.post('/api/auth', formData, config);
 
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
     loadUser();
   } catch (err) {
     dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });

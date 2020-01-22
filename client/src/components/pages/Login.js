@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { login, clearErrors } from '../../actions/authActions';
 import { setAlert } from '../../actions/alertActions';
@@ -17,7 +17,6 @@ const Login = props => {
   });
 
   useEffect(() => {
-    console.log('isAuthenticated', isAuthenticated);
     if (isAuthenticated) {
       props.history.push('/');
     }

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const Alerts = props => {
-  console.log(props);
   return (
     props.alerts.length > 0 &&
     props.alerts.map(alert => (

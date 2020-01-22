@@ -1,17 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import StudentContext from '../../context/student/studentContext';
+
+import {
+  deleteStudent,
+  setCurrent,
+  getStudents
+} from '../../actions/studentActions';
 
 const StudentList = props => {
-  const studentContext = useContext(StudentContext);
-
   const {
-    students,
-    filtered,
+    student: { students, filtered },
     deleteStudent,
     setCurrent,
     getStudents
-  } = studentContext;
+  } = props;
 
   useEffect(() => {
     getStudents();
@@ -175,4 +178,13 @@ const StudentList = props => {
   );
 };
 
-export default StudentList;
+const mapStateToProps = state => ({
+  student: state.student,
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, {
+  deleteStudent,
+  setCurrent,
+  getStudents
+})(StudentList);

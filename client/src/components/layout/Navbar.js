@@ -1,21 +1,19 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { logout } from '../../actions/authActions';
-import StudentContext from '../../context/student/studentContext';
+import { clearStudents } from '../../actions/studentActions';
 
 const Navbar = props => {
-  const studentContext = useContext(StudentContext);
-
   const {
     auth: { isAuthenticated, user },
-    logout,
     title,
-    icon
+    icon,
+    logout,
+    clearStudents
   } = props;
-  const { clearStudents } = studentContext;
 
   const onLogout = () => {
     logout();
@@ -73,4 +71,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout, clearStudents })(Navbar);
