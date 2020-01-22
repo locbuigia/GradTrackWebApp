@@ -7,6 +7,7 @@ import {
   setCurrent,
   getStudents
 } from '../../actions/studentActions';
+import { dynamicSort } from '../../utils/index';
 
 const StudentList = props => {
   const {
@@ -24,6 +25,7 @@ const StudentList = props => {
   const [detailModal, setDetailModal] = useState(false);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [currStudent, setCurrStudent] = useState(null);
+  const [sortValue, setSortValue] = useState('');
 
   const detailModalToggle = student => {
     setDetailModal(!detailModal);
@@ -141,17 +143,43 @@ const StudentList = props => {
 
   let data = filtered || students;
 
+  const sortSalary = property => {
+    if (sortValue === '' || sortValue === `${property}`) {
+      data = data.sort(dynamicSort(`-${property}`));
+      setSortValue(`-${property}`);
+    } else {
+      data = data.sort(dynamicSort(`${property}`));
+      setSortValue(`${property}`);
+    }
+  };
+
   return (
     <Table striped bordered responsive>
       <thead>
         <tr>
           <th>#</th>
           <th>Student ID</th>
-          <th>Student Name</th>
+          <th>
+            <a
+              href='/#'
+              className='sortable-header'
+              onClick={() => sortSalary('name')}
+            >
+              Student Name
+            </a>
+          </th>
           <th>Major</th>
           <th>Company</th>
           <th>Position</th>
-          <th>Salary</th>
+          <th>
+            <a
+              href='/#'
+              className='sortable-header'
+              onClick={() => sortSalary('salary')}
+            >
+              Salary
+            </a>
+          </th>
           <th>Employment Type</th>
         </tr>
       </thead>

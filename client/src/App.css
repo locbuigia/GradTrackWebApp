@@ -204,6 +204,10 @@ button.link {
   outline: none;
 }
 
+.sortable-header:hover {
+  text-decoration: none;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .hide-sm {
